@@ -1,0 +1,1 @@
+ & C:/Python310/python.exe d:/Job/facebookposter/poster.py
