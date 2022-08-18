@@ -1,1 +1,1 @@
- & C:/Python310/python.exe d:/Job/facebookposter/poster.py
+& C:/Users/eltim/AppData/Local/Microsoft/WindowsApps/python3.10.exe c:/Users/eltim/facebookposter/poster.py
