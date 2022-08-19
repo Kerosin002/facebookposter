@@ -70,7 +70,7 @@ if answer=='2':
         for j in range(9):
             pyautogui.typewrite("\t")
         pyautogui.typewrite("\n")
-        time.sleep(3)
+        time.sleep(10)
         pyautogui.write(['f4'])
         time.sleep(1)
 if answer=='1':
@@ -78,7 +78,7 @@ if answer=='1':
         link="https://www.facebook.com/groups/"+groups[i]
         pyautogui.typewrite(link)
         pyautogui.typewrite('\n')
-        time.sleep(10)
+        time.sleep(15)
         #Opening postCreator
         #for j in range(tb):
         #    pyautogui.typewrite("\t")
@@ -116,6 +116,6 @@ if answer=='1':
         time.sleep(2)
         #pyautogui.typewrite("\t")
         pyautogui.typewrite("\n")
-        time.sleep(10)
+        time.sleep(15)
         pyautogui.write(['f4'])
         time.sleep(1)
