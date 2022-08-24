@@ -1,9 +1,17 @@
+import tkinter as tk
+from tkinter import filedialog, Text
 import os
 import subprocess
 import pyautogui
 import time
 import webbrowser
 import codecs
+
+root=tk.Tk()
+filePath=""
+fileName=""
+ffp=""
+
 #An array with groups IDs
 print ("Choose the workmode")
 print ("1:Normal")
