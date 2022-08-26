@@ -14,6 +14,7 @@ root=tk.Tk()
 ffp=""
 fileName=""
 filePath=""
+lineCounter=0
 root.geometry=('1680x1080')
 canvas=tk.Canvas(root, height=20, width=300,bg="blue")
 
@@ -22,6 +23,11 @@ def takeInput():
     f=open('description.txt','w')
     f.writelines(input)
     f.close()
+    f=open('description.txt','r')
+    global lineCounter
+    lineCounter=len(f.readlines())
+    print(lineCounter)
+    
     print(input)
 
 def addApp():
@@ -79,7 +85,7 @@ def mainScript():
         pyautogui.typewrite('c')
         pyautogui.keyUp('ctrl')
         #Opening a webBrowser
-        subprocess.Popen(["C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"])
+        subprocess.Popen(["C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"],show='maximize')
 
 
 
@@ -107,6 +113,18 @@ def mainScript():
             #Filling field with content
             pyautogui.hotkey('ctrl','v')
             time.sleep(4)
+            x=870
+            y=680
+            if lineCounter>=12:
+                x=870
+                y=810
+            else:
+                if lineCounter<=3:
+                    x=870
+                    y=680
+                else:
+                    for j in range (8):
+                        y=+20
             #Opening window for file attach
             #for j in range(3):
             #    pyautogui.typewrite("\t")
