@@ -40,8 +40,10 @@ def addApp():
     sl=ffp.rfind('/')
     label = tk.Label(canvas, text=ffp, bg="gray")
     label.pack()
+    global filePath
     filePath=ffp[0:sl]
     print(filePath)
+    global fileName
     fileName=ffp[sl+1:]
     print(fileName)
 
