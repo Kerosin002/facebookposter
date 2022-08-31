@@ -1,5 +1,7 @@
+from cProfile import label
+from re import X
 import tkinter as tk
-from tkinter import Button, Label, filedialog, Text
+from tkinter import Button, Label, Place, filedialog, Text
 import os
 import subprocess
 import pyautogui
@@ -10,25 +12,98 @@ import codecs
 
 
 root=tk.Tk()
+root.configure(background="#263D42")
+root.title("El-Time FB poster")
+root.iconbitmap("D:/Job/facebookposter/elico.ico")
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+print(screen_width)
+print(screen_height)
+root.geometry(f'{screen_width-200}x{screen_height-200}')
+root.resizable(False,False)
 
 ffp=""
 fileName=""
 filePath=""
 lineCounter=0
-root.geometry=('1680x1080')
-canvas=tk.Canvas(root, height=20, width=300,bg="blue")
+stcounter=0
+#root.geometry=('1680x1080')
+canvas=tk.Canvas(root, height=20, width=300,bg="red")
+def nextStep():
+    global stcounter
+    if stcounter==0:
+        grtngs.pack_forget()
+        step1.pack()
+        inputxt.pack()
+        display.pack()
+        
+        stcounter=stcounter+1
+    else:
+        if stcounter==1:
+            step1.pack_forget()
+            inputxt.pack_forget()
+            display.pack_forget()
+            step2.pack()
+            canvas.pack()
+            openFile.pack()
+            hint2.pack()
+            hint2a.pack()
+            stcounter=stcounter+1
+            prbtn.pack(side=tk.LEFT)
+        else:
+            if stcounter==2:
+                step2.pack_forget()
+                canvas.pack_forget()
+                openFile.pack_forget()
+                nsbtn.pack_forget()
+                step3.pack()
+                startScript.pack()
+                atnt.pack()
+                hint2.pack_forget()
+                hint2a.pack_forget()
+
+def prevStep():
+    global stcounter
+    if stcounter==2:
+        step3.pack_forget()
+        startScript.pack_forget()
+        atnt.pack_forget()
+        step2.pack()
+        canvas.pack()
+        openFile.pack()
+        hint2.pack()
+        hint2a.pack()
+        stcounter=stcounter-1
+        nsbtn.pack(side=tk.RIGHT)
+    else:
+        if stcounter==1:
+            step2.pack_forget()
+            canvas.pack_forget()
+            openFile.pack_forget()
+            step1.pack()
+            inputxt.pack()
+            display.pack()
+            hint2.pack_forget()
+            hint2a.pack_forget()
+            #stcounter=stcounter-1
+            prbtn.pack_forget()
+        
+    
+
+
 
 def takeInput():
     input=inputxt.get("1.0","end-1c")
-    f=open('description.txt','w')
+    f=open('D:/Job/facebookposter/description.txt','w')
     f.writelines(input)
     f.close()
-    f=open('description.txt','r')
+    f=open('D:/Job/facebookposter/description.txt','r')
     global lineCounter
     lineCounter=len(f.readlines())
     print(lineCounter)
     
     print(input)
+
 
 def addApp():
     for widget in canvas.winfo_children():
@@ -46,20 +121,36 @@ def addApp():
     global fileName
     fileName=ffp[sl+1:]
     print(fileName)
+    
+    
 
-l=Label(text="Fill field with text")
-inputxt=Text(root, height=40,width=150)
-display= Button(root, height=2,width=20,text="Save Content", command=lambda:takeInput())
-openFile = tk.Button(root, text="Open File", padx=25,
-                     pady=10, fg='white', bg="#263D42", command=addApp)
+#l=Label(text="Fill field with text", bg="#263D42")
+inputxt=Text(root, height=40,width=150,fg="white",bg="black",insertbackground="white")
+display= Button(root, height=2,width=20,text="Save Content", fg='#263D42', bg="red", command=lambda:takeInput())
+openFile = tk.Button(master=root, text="Open File", padx=25,
+                     pady=10, fg='#263D42', bg="red", command=addApp)
 
-l.pack()
-inputxt.pack()
-canvas.pack()
-openFile.pack()
-display.pack()
+grtngs=Label(text="Добро подаловать в El-Time FaceBook Poster")
+step1=Label(text="Введите текст который будет в Вашей публикации")
+step2=Label(text="Выберите файл который будет изображением в Вашей публикации")
+hint2=Label(text="Данный этап можно пропустить")
+hint2a=Label(text="ВНИМАНИЕ:Путь к файлу не может содержать буквы неанглийского алфавита!!!")
+step3=Label(text="Для запуска Бота нажмите на кнопку Start")
+atnt=Label(text="ПЕРЕД ЗАПУСКОМ УБЕДИТЕСЬ ЧТО У ВАС АНГЛИЙСКАЯ(ИЛИ ПОЛЬСКАЯ) РАСКЛАДКА КЛАВИАТУРЫ!!!")
+grtngs.pack()
 
 
+#display.place(x=960,y=855)
+#l.pack()
+
+
+nsbtn = tk.Button(master=root, text="Далее", padx=25,
+                     pady=10, fg='#263D42', bg="red", command=nextStep)
+                    
+prbtn=tk.Button(master=root, text="Назад", padx=25,
+                    pady=10, fg='#263D42', bg="red",command=prevStep)
+
+nsbtn.pack(side=tk.RIGHT)
 
 
 
@@ -76,10 +167,12 @@ groups =['455531398260426',
 
 
 def mainScript():
+        global filePath
+        global fileName
         time.sleep(3)
         #Open a file with the text for the post a copying the content 
         #os.system("notepad description.txt")
-        webbrowser.open("description.txt")
+        webbrowser.open("D:/Job/facebookposter/description.txt")
         time.sleep(2)
         pyautogui.keyDown('ctrl')
         pyautogui.typewrite('a')
@@ -87,7 +180,7 @@ def mainScript():
         pyautogui.typewrite('c')
         pyautogui.keyUp('ctrl')
         #Opening a webBrowser
-        subprocess.Popen(["C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"],show='maximize')
+        subprocess.Popen(["C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"])
 
 
 
@@ -133,28 +226,29 @@ def mainScript():
             #pyautogui.typewrite("\n")
             pyautogui.click(870,810)
             time.sleep(3)
-            pyautogui.typewrite(fileName)
-            for j in range(5):
-                pyautogui.typewrite("\t")
-            time.sleep(4)
-            pyautogui.typewrite("\n")
-            pyautogui.typewrite(filePath)
-            pyautogui.typewrite("\n")
-            time.sleep(2)
-            #for j in range(10):
-            #    pyautogui.typewrite("\t")
-            time.sleep(2)
-            pyautogui.click(770,810)
+            if fileName!="":
+                pyautogui.typewrite(fileName)
+                for j in range(5):
+                    pyautogui.typewrite("\t")
+                time.sleep(4)
+                pyautogui.typewrite("\n")
+                pyautogui.typewrite(filePath)
+                pyautogui.typewrite("\n")
+                time.sleep(2)
+                #for j in range(10):
+                #    pyautogui.typewrite("\t")
+                time.sleep(2)
+                pyautogui.click(770,810)
             time.sleep(2)
             #for j in range(4):
             #   pyautogui.typewrite("\t")
             pyautogui.click(870,875)
             time.sleep(2)
             #pyautogui.typewrite("\t")
-            pyautogui.typewrite("\n")
+            #pyautogui.typewrite("\n")
             time.sleep(15)
             pyautogui.write(['f4'])
             time.sleep(1)
-startScript=tk.Button(root, text="Start", padx=25, pady=10,fg='white', bg="#263D42", command=mainScript)
-startScript.pack()
+startScript=tk.Button(root, text="Start", fg='#263D42', bg="red", command=mainScript, height=10, width=40,font=("Arial",25))
+
 root.mainloop()
