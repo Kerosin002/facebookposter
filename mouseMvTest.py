@@ -3,5 +3,7 @@ import subprocess
 import pyautogui
 import time
 import webbrowser
-
-pyautogui.moveTo(200,300)
+time.sleep(1)
+pyautogui.moveTo(680,231)
+#pyautogui.moveTo(540,225)
+#pyautogui.moveTo(680,1070)

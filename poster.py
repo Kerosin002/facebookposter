@@ -11,6 +11,7 @@ import codecs
 
 
 
+
 root=tk.Tk()
 root.configure(background="#263D42")
 root.title("El-Time FB poster")
@@ -94,7 +95,7 @@ def prevStep():
 
 def takeInput():
     input=inputxt.get("1.0","end-1c")
-    f=open('D:/Job/facebookposter/description.txt','w')
+    f=codecs.open('D:/Job/facebookposter/description.txt','w','utf-8')
     f.writelines(input)
     f.close()
     f=open('D:/Job/facebookposter/description.txt','r')
@@ -218,8 +219,17 @@ def mainScript():
                     x=870
                     y=680
                 else:
-                    for j in range (8):
-                        y=+20
+                    if lineCounter<=5:
+                        for j in range (lineCounter-3):
+                            y=y+23
+                        else:
+                            if lineCounter==6:
+                                y=726
+                            else:
+                                if lineCounter<=11 and lineCounter>=7:
+                                    y=726
+                                    for j in range (lineCounter-5):
+                                        y=y+10
             #Opening window for file attach
             #for j in range(3):
             #    pyautogui.typewrite("\t")
