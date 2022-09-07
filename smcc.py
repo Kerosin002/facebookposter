@@ -56,7 +56,7 @@ def clicker():
 
 root=tk.Tk()
 root.configure(background="#263D42")
-root.title("El-Time FB poster CooSetup")
+root.title("CoordSetup")
 root.iconbitmap("D:/Job/facebookposter/elico.ico")
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
