@@ -6,9 +6,15 @@ import configparser
 import tkinter as tk
 from tkinter import Button, Frame, Label, Place, Toplevel, filedialog, Text
 from pynput.mouse import Listener
+import os
 
 config=configparser.ConfigParser()
 counter=0
+userDir=os.path.expanduser('~')
+userDir=userDir+"\\facebookposter"
+conFile=userDir+"\\coords.ini"
+if os.path.isdir(userDir)==False:
+        os.mkdir(userDir)
 config.add_section("coords")
 def on_click(x,y,button,pressed):
       global counter
@@ -31,7 +37,7 @@ def on_click(x,y,button,pressed):
          if counter==5:
             config.set("coords","opimgx",xs)
             config.set("coords","opimgy",ys)
-         with open(r"D:/Job/facebookposter/coords.ini",'w') as configfileObj:
+         with open(conFile,'w') as configfileObj:
             config.write(configfileObj)
             configfileObj.flush()
             configfileObj.close()
@@ -57,7 +63,13 @@ def clicker():
 root=tk.Tk()
 root.configure(background="#263D42")
 root.title("CoordSetup")
-root.iconbitmap("D:/Job/facebookposter/elico.ico")
+scriptPath=os.path.realpath(__file__)
+spsl=scriptPath.rfind("\\")
+scDir=scriptPath[0:spsl]
+icon="\\elico.ico"
+icoPath=scDir+icon
+print(icoPath)
+root.iconbitmap(icoPath)
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 print(screen_width)

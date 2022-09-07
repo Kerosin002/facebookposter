@@ -1,4 +1,7 @@
 from cProfile import label
+import http
+from lib2to3.pgen2 import driver
+from ntpath import join
 from re import X
 import tkinter as tk
 from tkinter import Button, Label, Place, filedialog, Text
@@ -8,14 +11,27 @@ import pyautogui
 import time
 import webbrowser
 import codecs
-
-
+import configparser
 
 
 root=tk.Tk()
 root.configure(background="#263D42")
 root.title("El-Time FB poster")
-root.iconbitmap("D:/Job/facebookposter/elico.ico")
+scriptPath=os.path.realpath(__file__)
+spsl=scriptPath.rfind("\\")
+scDir=scriptPath[0:spsl]
+icon="\\elico.ico"
+icoPath=scDir+icon
+print(icoPath)
+root.iconbitmap(icoPath)
+userDir=os.path.expanduser('~')
+userDir=userDir+"\\facebookposter"
+descPath=userDir+"\\description.txt"
+conFile=userDir+"\\coords.ini"
+coordReader=configparser.ConfigParser()
+coordReader.read(conFile)
+print(userDir)
+print(descPath)
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 print(screen_width)
@@ -95,10 +111,12 @@ def prevStep():
 
 def takeInput():
     input=inputxt.get("1.0","end-1c")
-    f=codecs.open('D:/Job/facebookposter/description.txt','w','utf-8')
+    if os.path.isdir(userDir)==False:
+        os.mkdir(userDir)
+    f=codecs.open(descPath,'w','utf-8')
     f.writelines(input)
     f.close()
-    f=open('D:/Job/facebookposter/description.txt','r')
+    f=open(descPath,'r')
     global lineCounter
     lineCounter=len(f.readlines())
     print(lineCounter)
@@ -126,7 +144,9 @@ def addApp():
     
 
 #l=Label(text="Fill field with text", bg="#263D42")
-inputxt=Text(root, height=40,width=150,fg="white",bg="black",insertbackground="white")
+hght=int(40*screen_height/1720)
+wdth=int(50*screen_width/880)
+inputxt=Text(root, height=hght,width=wdth,fg="white",bg="black",insertbackground="white")
 display= Button(root, height=2,width=20,text="Save Content", fg='#263D42', bg="red", command=lambda:takeInput())
 openFile = tk.Button(master=root, text="Open File", padx=25,
                      pady=10, fg='#263D42', bg="red", command=addApp)
@@ -173,7 +193,7 @@ def mainScript():
         time.sleep(3)
         #Open a file with the text for the post a copying the content 
         #os.system("notepad description.txt")
-        webbrowser.open("D:/Job/facebookposter/description.txt")
+        webbrowser.open(descPath)
         time.sleep(2)
         pyautogui.keyDown('ctrl')
         pyautogui.typewrite('a')
@@ -181,6 +201,7 @@ def mainScript():
         pyautogui.typewrite('c')
         pyautogui.keyUp('ctrl')
         #Opening a webBrowser
+        
         subprocess.Popen(["C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"])
 
 
@@ -203,38 +224,39 @@ def mainScript():
             #pyautogui.typewrite("\n")
             #pyautogui.keyDown('ctrl')
             #pyautogui.typewrite('f')
-            pyautogui.click(540,225)
+            pyautogui.click(int(coordReader['coords']['cx']),int(coordReader['coords']['cy']))
 
             time.sleep(6)
             #Filling field with content
+            resid=int(coordReader['coords']['sendy'])-int(coordReader['coords']['imgy'])
             pyautogui.hotkey('ctrl','v')
             time.sleep(4)
-            x=870
-            y=680
+            x=int(coordReader['coords']['imgx'])
+            y=int(coordReader['coords']['imgy'])
             if lineCounter>=12:
-                x=870
-                y=810
+                x=int(coordReader['coords']['imgx'])
+                y=int(coordReader['coords']['sendfy'])-resid
             else:
                 if lineCounter<=3:
-                    x=870
-                    y=680
-                else:
-                    if lineCounter<=5:
-                        for j in range (lineCounter-3):
-                            y=y+23
-                        else:
-                            if lineCounter==6:
-                                y=726
-                            else:
-                                if lineCounter<=11 and lineCounter>=7:
-                                    y=726
-                                    for j in range (lineCounter-5):
-                                        y=y+10
+                    x=int(coordReader['coords']['imgx'])
+                    y=int(coordReader['coords']['imgy'])
+            #    else:
+            #        if lineCounter<=5:
+            #            for j in range (lineCounter-3):
+            #                y=y+23
+            #            else:
+            #                if lineCounter==6:
+            #                    y=726
+            #                else:
+            #                    if lineCounter<=11 and lineCounter>=7:
+            #                        y=726
+            #                        for j in range (lineCounter-5):
+            #                            y=y+10
             #Opening window for file attach
             #for j in range(3):
             #    pyautogui.typewrite("\t")
             #pyautogui.typewrite("\n")
-            pyautogui.click(870,810)
+            pyautogui.click(x,y)
             time.sleep(3)
             if fileName!="":
                 pyautogui.typewrite(fileName)
@@ -248,11 +270,11 @@ def mainScript():
                 #for j in range(10):
                 #    pyautogui.typewrite("\t")
                 time.sleep(2)
-                pyautogui.click(770,810)
+                pyautogui.click(int(coordReader['coords']['opimgx']),int(coordReader['coords']['opimgy']))
             time.sleep(2)
             #for j in range(4):
             #   pyautogui.typewrite("\t")
-            pyautogui.click(870,875)
+            pyautogui.click(int(coordReader['coords']['sendfx']),y+resid)
             time.sleep(2)
             #pyautogui.typewrite("\t")
             #pyautogui.typewrite("\n")
