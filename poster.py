@@ -205,7 +205,9 @@ def mainScript():
         pyautogui.keyUp('ctrl')
         #Opening a webBrowser
         
-        subprocess.Popen(["C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"])
+        subprocess.Popen(["C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe","--start-maximized"])
+        #subprocess.Popen(["C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe","--start-fullscreen"])
+        #subprocess.Popen(["C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe","--new-window","--window-size={},{}".format(200, 200)])
 
 
 
