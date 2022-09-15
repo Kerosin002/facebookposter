@@ -29,12 +29,16 @@ def on_click(x,y,button,pressed):
             config.set("coords","sendx",xs)
             config.set("coords","sendy",ys)
          if counter==3:
-            config.set("coords","sendfx",xs)
-            config.set("coords","sendfy",ys)
-         if counter==4:
             config.set("coords","imgx",xs)
             config.set("coords","imgy",ys)
+            
+         if counter==4:
+            config.set("coords","sendfx",xs)
+            config.set("coords","sendfy",ys)
          if counter==5:
+            config.set("coords","imgfx",xs)
+            config.set("coords","imgfy",ys)
+         if counter==6:
             config.set("coords","opimgx",xs)
             config.set("coords","opimgy",ys)
          with open(conFile,'w') as configfileObj:
@@ -50,12 +54,15 @@ def clicker():
       if counter==1:
          step.config(text="Отметьте точку для отправки поста")
       if counter==2:
-         step.config(text="Отметьте точку для отправки поста\n при максимальном размере\n поля ввода")
-      if counter==3:
          step.config(text="Отметьте точку прикрепления\n изображения")
+      if counter==3:
+         step.config(text="Отметьте точку для отправки поста\n при максимальном размере\n поля ввода")
+         
       if counter==4:
-         step.config(text="Отметьте точку Открыть\n в окне выбора файла")
+         step.config(text="Отметьте точку прикрепления\n изображения\n при максимальном размере\n поля ввода")
       if counter==5:
+         step.config(text="Отметьте точку Открыть\n в окне выбора файла")
+      if counter==6:
          step.config(text="Все Готово!\n Можете закрыть окно программы")
       print(counter)
       listener.join()
