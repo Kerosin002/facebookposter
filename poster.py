@@ -222,6 +222,7 @@ def mainScript():
             link="https://www.facebook.com/groups/"+groups[i]
             pyautogui.typewrite(link)
             pyautogui.typewrite('\n')
+            pyautogui.typewrite('\n')
             time.sleep(15)
             #Opening postCreator
             #for j in range(tb):
