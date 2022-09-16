@@ -113,8 +113,8 @@ def takeInput():
     input=inputxt.get("1.0","end-1c")
     if os.path.isdir(userDir)==False:
         os.mkdir(userDir)
-    with codecs.open(descPath,'w','utf-8') as f:
-        f.write(input+"\n")
+    f=codecs.open(descPath,'w','utf-8')
+    f.writelines(input)
     f.close()
     f=open(descPath,'r')
     global lineCounter
