@@ -116,7 +116,7 @@ def takeInput():
     f=codecs.open(descPath,'w','utf-8')
     f.writelines(input)
     f.close()
-    f=open(descPath,'r')
+    f=codecs.open(descPath,'r','utf-8')
     global lineCounter
     lineCounter=len(f.readlines())
     print(lineCounter)
